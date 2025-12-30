@@ -2,7 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Zap, Settings, Search, ArrowRight } from "lucide-react";
-
+import { Link } from "react-router-dom";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 const services = [
   {
     id: "mvp",
@@ -67,84 +68,94 @@ export function Services() {
   return (
     <section id="services" className="section-padding bg-secondary/20">
       <div className="section-container">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <Badge variant="accent" className="mb-4">Offres</Badge>
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Des forfaits clairs, sans surprise
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Trois offres packagées pour répondre à vos besoins. Devis détaillé sous 48h.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <Badge variant="accent" className="mb-4">Offres</Badge>
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Des forfaits clairs, sans surprise
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Trois offres packagées pour répondre à vos besoins. Devis détaillé sous 48h.
+            </p>
+          </div>
+        </ScrollReveal>
 
-        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <StaggerContainer className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto" staggerDelay={0.15}>
           {services.map((service) => (
-            <Card
-              key={service.id}
-              variant="pricing"
-              className={`relative flex flex-col ${
-                service.popular ? "border-accent ring-2 ring-accent/20" : ""
-              }`}
-            >
-              {service.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <Badge variant="default" className="bg-accent text-accent-foreground shadow-lg">
-                    Le plus populaire
-                  </Badge>
-                </div>
-              )}
+            <StaggerItem key={service.id}>
+              <Card
+                variant="pricing"
+                className={`relative flex flex-col h-full ${
+                  service.popular ? "border-accent ring-2 ring-accent/20" : ""
+                }`}
+              >
+                {service.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <Badge variant="default" className="bg-accent text-accent-foreground shadow-lg">
+                      Le plus populaire
+                    </Badge>
+                  </div>
+                )}
 
-              <CardHeader className="text-center pb-2">
-                <div className="mx-auto w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
-                  <service.icon className="w-7 h-7 text-accent" />
-                </div>
-                <CardTitle className="text-xl">{service.name}</CardTitle>
-                <CardDescription className="text-base">{service.tagline}</CardDescription>
-              </CardHeader>
+                <CardHeader className="text-center pb-2">
+                  <div className="mx-auto w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+                    <service.icon className="w-7 h-7 text-accent" />
+                  </div>
+                  <CardTitle className="text-xl">{service.name}</CardTitle>
+                  <CardDescription className="text-base">{service.tagline}</CardDescription>
+                </CardHeader>
 
-              <CardContent className="flex-1">
-                <div className="text-center mb-6">
-                  <p className="font-heading text-3xl font-bold text-foreground">{service.price}</p>
-                  <p className="text-sm text-muted-foreground">{service.duration}</p>
-                </div>
+                <CardContent className="flex-1">
+                  <div className="text-center mb-6">
+                    <p className="font-heading text-3xl font-bold text-foreground">{service.price}</p>
+                    <p className="text-sm text-muted-foreground">{service.duration}</p>
+                  </div>
 
-                <p className="text-sm text-muted-foreground mb-6">{service.description}</p>
+                  <p className="text-sm text-muted-foreground mb-6">{service.description}</p>
 
-                <ul className="space-y-3">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm">
-                      <Check className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="space-y-3">
+                    {service.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm">
+                        <Check className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                        <span className="text-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                <div className="mt-6 pt-4 border-t border-border">
-                  <p className="text-xs text-muted-foreground">
-                    <span className="font-medium">Idéal pour :</span> {service.ideal}
-                  </p>
-                </div>
-              </CardContent>
+                  <div className="mt-6 pt-4 border-t border-border">
+                    <p className="text-xs text-muted-foreground">
+                      <span className="font-medium">Idéal pour :</span> {service.ideal}
+                    </p>
+                  </div>
+                </CardContent>
 
-              <CardFooter>
-                <Button
-                  variant={service.popular ? "cta" : "outline"}
-                  className="w-full"
-                  asChild
-                >
-                  <a href="#contact">
-                    Discuter de mon projet
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </Button>
-              </CardFooter>
-            </Card>
+                <CardFooter className="flex-col gap-3">
+                  <Button
+                    variant={service.popular ? "cta" : "outline"}
+                    className="w-full"
+                    asChild
+                  >
+                    <a href="#contact">
+                      Discuter de mon projet
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
+                  </Button>
+                  <Button variant="ghost" size="sm" className="w-full" asChild>
+                    <Link to={`/services#${service.id}`}>
+                      Voir tous les détails
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
-        <p className="text-center text-sm text-muted-foreground mt-10">
-          Besoin d'un projet sur-mesure ? <a href="#contact" className="text-accent hover:underline font-medium">Contactez-moi</a> pour un devis personnalisé.
-        </p>
+        <ScrollReveal delay={0.3}>
+          <p className="text-center text-sm text-muted-foreground mt-10">
+            Besoin d'un projet sur-mesure ? <a href="#contact" className="text-accent hover:underline font-medium">Contactez-moi</a> pour un devis personnalisé.
+          </p>
+        </ScrollReveal>
       </div>
     </section>
   );
