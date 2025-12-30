@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 
 const projects = [
   {
@@ -33,55 +33,59 @@ export function Portfolio() {
   return (
     <section id="portfolio" className="section-padding bg-background">
       <div className="section-container">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <Badge variant="accent" className="mb-4">Réalisations</Badge>
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Des projets concrets, des résultats mesurables
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Quelques exemples de missions récentes (détails anonymisés pour confidentialité).
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <Badge variant="accent" className="mb-4">Réalisations</Badge>
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Des projets concrets, des résultats mesurables
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Quelques exemples de missions récentes (détails anonymisés pour confidentialité).
+            </p>
+          </div>
+        </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto" staggerDelay={0.1}>
           {projects.map((project, index) => (
-            <Card key={index} variant="interactive" className="flex flex-col">
-              <CardContent className="p-6 flex-1 flex flex-col">
-                <div className="mb-4">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
-                    {project.client}
+            <StaggerItem key={index}>
+              <Card variant="interactive" className="flex flex-col h-full">
+                <CardContent className="p-6 flex-1 flex flex-col">
+                  <div className="mb-4">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                      {project.client}
+                    </p>
+                    <h3 className="font-heading text-xl font-semibold text-foreground">
+                      {project.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground mb-4 flex-1">
+                    {project.description}
                   </p>
-                  <h3 className="font-heading text-xl font-semibold text-foreground">
-                    {project.title}
-                  </h3>
-                </div>
 
-                <p className="text-sm text-muted-foreground mb-4 flex-1">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.stack.map((tech) => (
-                    <Badge key={tech} variant="tech" className="text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="pt-4 border-t border-border space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Résultat :</span>
-                    <span className="font-medium text-success">{project.result}</span>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.stack.map((tech) => (
+                      <Badge key={tech} variant="tech" className="text-xs">
+                        {tech}
+                      </Badge>
+                    ))}
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Durée :</span>
-                    <span className="font-medium text-foreground">{project.duration}</span>
+
+                  <div className="pt-4 border-t border-border space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Résultat :</span>
+                      <span className="font-medium text-success">{project.result}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Durée :</span>
+                      <span className="font-medium text-foreground">{project.duration}</span>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

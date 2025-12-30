@@ -5,8 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Calendar, ArrowRight, ArrowLeft, CheckCircle2, Loader2 } from "lucide-react";
+import { Calendar, ArrowRight, ArrowLeft, CheckCircle2, Loader2, Video } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { CalendlyEmbed } from "@/components/CalendlyEmbed";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type FormStep = 1 | 2 | 3;
 
@@ -154,20 +157,22 @@ export function Contact() {
     return (
       <section id="contact" className="section-padding bg-primary text-primary-foreground">
         <div className="section-container">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-success/20 flex items-center justify-center">
-              <CheckCircle2 className="w-10 h-10 text-success" />
+          <ScrollReveal>
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-success/20 flex items-center justify-center">
+                <CheckCircle2 className="w-10 h-10 text-success" />
+              </div>
+              <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-4">
+                Message envoyé !
+              </h2>
+              <p className="text-lg text-primary-foreground/80 mb-8">
+                Merci pour votre demande. Je vous recontacte sous 48h pour organiser notre appel découverte.
+              </p>
+              <p className="text-sm text-primary-foreground/60">
+                En attendant, n'hésitez pas à préparer vos questions !
+              </p>
             </div>
-            <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-4">
-              Message envoyé !
-            </h2>
-            <p className="text-lg text-primary-foreground/80 mb-8">
-              Merci pour votre demande. Je vous recontacte sous 48h pour organiser notre appel découverte.
-            </p>
-            <p className="text-sm text-primary-foreground/60">
-              En attendant, n'hésitez pas à préparer vos questions !
-            </p>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     );
@@ -176,20 +181,58 @@ export function Contact() {
   return (
     <section id="contact" className="section-padding bg-primary text-primary-foreground">
       <div className="section-container">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4 bg-primary-foreground/10 text-primary-foreground border-primary-foreground/20">
-              Contact
-            </Badge>
-            <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-4">
-              Parlons de votre projet
-            </h2>
-            <p className="text-lg text-primary-foreground/80">
-              Répondez à quelques questions pour que je puisse mieux vous conseiller.
-            </p>
-          </div>
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <Badge variant="secondary" className="mb-4 bg-primary-foreground/10 text-primary-foreground border-primary-foreground/20">
+                Contact
+              </Badge>
+              <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-4">
+                Parlons de votre projet
+              </h2>
+              <p className="text-lg text-primary-foreground/80">
+                Réservez directement un créneau ou répondez à quelques questions pour que je puisse mieux vous conseiller.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <Card className="bg-card text-card-foreground">
+          <ScrollReveal delay={0.1}>
+            <Tabs defaultValue="calendar" className="w-full">
+              <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+                <TabsTrigger value="calendar" className="flex items-center gap-2">
+                  <Video className="w-4 h-4" />
+                  Réserver un appel
+                </TabsTrigger>
+                <TabsTrigger value="form" className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  Formulaire
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="calendar">
+                <Card className="bg-card text-card-foreground">
+                  <CardContent className="p-4 sm:p-8">
+                    <div className="text-center mb-6">
+                      <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
+                        Appel découverte gratuit - 15 min
+                      </h3>
+                      <p className="text-muted-foreground text-sm">
+                        On discute de votre projet, je vous conseille sur la meilleure approche.
+                      </p>
+                    </div>
+                    <CalendlyEmbed 
+                      url="https://calendly.com/your-username/15min"
+                      className="w-full"
+                    />
+                    <p className="text-center text-xs text-muted-foreground mt-4">
+                      💡 Remplacez l'URL Calendly dans le fichier CalendlyEmbed.tsx par votre lien personnel
+                    </p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="form">
+                <Card className="bg-card text-card-foreground max-w-2xl mx-auto">
             <CardContent className="p-8">
               {/* Progress indicator */}
               <div className="flex items-center justify-center gap-2 mb-8">
@@ -420,6 +463,10 @@ export function Contact() {
               </form>
             </CardContent>
           </Card>
+
+              </TabsContent>
+            </Tabs>
+          </ScrollReveal>
 
           <p className="text-center text-sm text-primary-foreground/60 mt-6">
             Je réponds sous 48h. Pas de spam, promis.
